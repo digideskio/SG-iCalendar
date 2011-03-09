@@ -41,15 +41,13 @@ class SG_iCal_Parser {
 		} else {
 			// The resource isn't local, so it's assumed to
 			// be a URL
-			$c = curl_init();
-			curl_setopt($c, CURLOPT_URL, $resource);
-			curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
-			if( !ini_get('safe_mode') ){
-				curl_setopt($c, CURLOPT_FOLLOWLOCATION, true);
-			}
-			$content = curl_exec($c);
+			$c = new Zend_Http_Client();
+			$c->setUri($resource);
+			$r = $c->request('GET');
 
-			$ct = curl_getinfo($c, CURLINFO_CONTENT_TYPE);
+			$content = $r->getBody();
+
+			$ct = $c->getHeader('Content-Type');
 			$enc = preg_replace('/^.*charset=([-a-zA-Z0-9]+).*$/', '$1', $ct);
 			if( $ct != '' && strtolower(str_replace('-','', $enc)) != 'utf8' ) {
 				// Well, the encoding says it ain't utf-8
