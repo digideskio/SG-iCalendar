@@ -7,6 +7,9 @@ and http://github.com/xonev/SG-iCalendar
 -------------------------------------------------------------------------------
 
 A simple example :
+ // require your Zend modules  here
+ require_once '..';
+
  $ical = new SG_iCalReader( "./basic.ics" );
  //or
  $ical = new SG_iCalReader( "http://example.com/calendar.ics" );
@@ -37,6 +40,9 @@ current (31 oct 2010)
  + Added duration unit tests
  + Support of Recurrent events in query Between()
  * various fixes on actual (5) issues
+
+0.6.0z (9 march 2011)
+ + Use Zend_Http_Client instead of curl (for php builds w/o curl)
 
 -------------------------------------------------------------------------------
 TODO :
